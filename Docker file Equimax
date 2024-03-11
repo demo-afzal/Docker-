@@ -1,0 +1,13 @@
+FROM hostname.corp.equinix.com:7070/baseimages/openjdk8-jdk-alpine
+#FROM openjdk:8-jdk-alpine
+
+RUN mkdir -p /eqx/uitool/code/BIL
+
+WORKDIR /eqx/uitool/code/BIL
+
+COPY . .
+
+EXPOSE 8080
+EXPOSE 8009
+
+ENTRYPOINT ["java", "-jar", "-Dserver.port=8080", "-Dtomcat.ajp.port=8009", "-Dlogging.file.name=./tomcat/logs/Single", "-Djavax.net.ssl.trustStore=./back-end-v2/certs/singleviewkeystore.jks", "-Djavax.net.ssl.trustStorePassword=singleview","-Dlog4j2.formatMsgNoLookups=true"]
